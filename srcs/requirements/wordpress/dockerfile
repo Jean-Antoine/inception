@@ -1,0 +1,6 @@
+FROM	debian:oldstable-20240926-slim
+RUN		apt-get update -y
+RUN		apt-get upgrade -y
+RUN		apt-get install -y wordpress curl php-fpm
+RUN		apt-get install -y redis-server php-redis
+EXPOSE	443

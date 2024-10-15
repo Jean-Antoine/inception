@@ -1,0 +1,4 @@
+FROM	debian
+RUN		apt-get upgrade && apt-get update
+RUN		apt-get install nginx -y
+RUN		apt-get install -y certbot python3-certbot-nginx

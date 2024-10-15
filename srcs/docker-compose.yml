@@ -1,0 +1,28 @@
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - inception
+
+networks:
+  inception:
+    name: inception
+
+volumes:
+  db:
+    name: db
+    driver: local
+    driver_opts:
+      device: /home/jeada-si/data/db
+      o : bind
+      type : none
+  wp:
+    name: wp
+    driver: local
+    driver_opts:
+      device: /home/jeada-si/data/wp
+      o : bind
+      type : none
