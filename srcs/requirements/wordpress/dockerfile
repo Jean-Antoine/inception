@@ -3,10 +3,9 @@ RUN				apt-get update -y
 RUN				apt-get upgrade -y
 RUN				apt-get install -y php curl php-fpm
 RUN				apt-get install -y redis-server php-redis
-COPY			./wp-config.php /home/wp-config.php
-COPY			./init_wp.sh /home/init_wp.sh
-RUN				chmod 777 /home/init_wp.sh
 RUN				apt-get install -y php-mysql
 RUN				apt-get install -y mariadb-client
-CMD				[ "tail", "-f", "/dev/null" ]
-# ENTRYPOINT		[ "/home/init_wp.sh" ]
+COPY			./init_wp.sh /home/init_wp.sh
+RUN				chmod 777 /home/init_wp.sh
+ENTRYPOINT		[ "/home/init_wp.sh" ]
+# CMD 			["tail", "-f", "/dev/null"]

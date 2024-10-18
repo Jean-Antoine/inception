@@ -8,13 +8,12 @@ services:
     networks:
       - inception
     env_file: ".env"
-    environment:
-      DB_PWD_FILE: /run/secrets/db_pwd
     secrets:
       - db_pwd
   nginx:
     build: ./requirements/nginx
     image: nginx
+    container_name: nginx
     volumes:
       - wp:/var/www/wordpress
     networks:
@@ -22,14 +21,21 @@ services:
     env_file: ".env"
     ports:
       - "443:443"
+    depends_on:
+      - wordpress
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
+    container_name: wordpress
     volumes:
       - wp:/var/www/wordpress
     networks:
       - inception
     env_file: ".env"
+    secrets:
+      - db_pwd
+    depends_on:
+      - mariadb
 
 networks:
   inception:
