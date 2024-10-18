@@ -1,4 +1,8 @@
 FROM	debian
 RUN		apt-get upgrade && apt-get update
 RUN		apt-get install nginx -y
-RUN		apt-get install -y certbot python3-certbot-nginx
+RUN		apt-get install -y openssl
+RUN		openssl req -x509 -nodes -out /home/inception.crt -keyout \
+    /home/inception.key -subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=jeada-si.42.fr/UID=admin_name"
+COPY	./nginx.conf /etc/nginx/nginx.conf
+CMD		["nginx", "-g", "daemon off;"]

@@ -1,5 +1,7 @@
-FROM	debian:oldstable-20240926-slim
-RUN		apt-get update
-RUN		apt-get upgrade -y
-RUN		apt-get install -y mariadb-server
-CMD		["mysqld_safe"]
+FROM			debian:bullseye
+RUN				apt-get update
+RUN				apt-get upgrade -y
+RUN				apt-get install -y mariadb-server
+COPY			./init_mariadb.sh /home/init_mariadb.sh
+RUN				chmod 777 /home/init_mariadb.sh
+ENTRYPOINT		[ "/home/init_mariadb.sh" ]

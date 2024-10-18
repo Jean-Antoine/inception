@@ -1,6 +1,12 @@
-FROM	debian:oldstable-20240926-slim
-RUN		apt-get update -y
-RUN		apt-get upgrade -y
-RUN		apt-get install -y wordpress curl php-fpm
-RUN		apt-get install -y redis-server php-redis
-EXPOSE	443
+FROM			debian:bullseye
+RUN				apt-get update -y
+RUN				apt-get upgrade -y
+RUN				apt-get install -y php curl php-fpm
+RUN				apt-get install -y redis-server php-redis
+COPY			./wp-config.php /home/wp-config.php
+COPY			./init_wp.sh /home/init_wp.sh
+RUN				chmod 777 /home/init_wp.sh
+RUN				apt-get install -y php-mysql
+RUN				apt-get install -y mariadb-client
+CMD				[ "tail", "-f", "/dev/null" ]
+# ENTRYPOINT		[ "/home/init_wp.sh" ]
