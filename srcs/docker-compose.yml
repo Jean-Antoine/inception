@@ -36,6 +36,24 @@ services:
       - db_pwd
     depends_on:
       - mariadb
+  ftp:
+    build: ./requirements/ftp
+    image: ftp
+    container_name: ftp
+    volumes:
+      - wp:/srv/ftp
+    networks:
+      - inception
+    env_file: ".env"
+    ports:
+      - "20:20"
+      - "21:21"
+  redis:
+    build: ./requirements/redis
+    image: redis
+    container_name: redis
+    networks:
+      - inception
 
 networks:
   inception:
