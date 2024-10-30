@@ -3,8 +3,8 @@ RUN				apt-get update -y
 RUN				apt-get upgrade -y
 RUN				apt-get install -y php curl php-fpm
 RUN				apt-get install -y php-mysql
-RUN				apt-get install -y mariadb-client
-COPY			./init_wp.sh /home/init_wp.sh
-RUN				chmod 777 /home/init_wp.sh
+RUN				apt-get install -y wget
+COPY			./init_adminer.sh /home/init_adminer.sh
+RUN				chmod 777 /home/init_adminer.sh
 COPY			./www.conf /etc/php/7.4/fpm/pool.d/www.conf
-ENTRYPOINT		[ "/home/init_wp.sh" ]
+ENTRYPOINT		[ "/home/init_adminer.sh" ]

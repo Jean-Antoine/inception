@@ -4,6 +4,9 @@ SRCS =	srcs/requirements/mariadb/dockerfile\
 
 all:		up
 
+hard-up:
+			docker compose -f ./srcs/docker-compose.yml up --force-recreate
+
 up:
 			docker compose -f ./srcs/docker-compose.yml up -d --build
 

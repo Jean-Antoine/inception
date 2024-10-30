@@ -10,19 +10,24 @@ services:
     env_file: ".env"
     secrets:
       - db_pwd
+    restart: always
   nginx:
     build: ./requirements/nginx
     image: nginx
     container_name: nginx
     volumes:
       - wp:/var/www/wordpress
+      - adminer:/var/www/adminer
     networks:
       - inception
     env_file: ".env"
     ports:
       - "443:443"
+      - "80:80"
     depends_on:
       - wordpress
+      - adminer
+    restart: always
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
@@ -36,6 +41,17 @@ services:
       - db_pwd
     depends_on:
       - mariadb
+    restart: always
+  adminer:
+    build: ./requirements/adminer
+    image: adminer
+    container_name: adminer
+    volumes:
+      - adminer:/var/www/adminer
+    networks:
+      - inception
+    env_file: ".env"
+    restart: always
   ftp:
     build: ./requirements/ftp
     image: ftp
@@ -48,12 +64,14 @@ services:
     ports:
       - "20:20"
       - "21:21"
+    restart: always
   redis:
     build: ./requirements/redis
     image: redis
     container_name: redis
     networks:
       - inception
+    restart: always
 
 networks:
   inception:
@@ -76,5 +94,12 @@ volumes:
     driver: local
     driver_opts:
       device: /home/jeada-si/data/wp
+      o : bind
+      type : none
+  adminer:
+    name: adminer
+    driver: local
+    driver_opts:
+      device: /home/jeada-si/data/adminer
       o : bind
       type : none

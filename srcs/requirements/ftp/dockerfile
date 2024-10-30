@@ -1,5 +1,6 @@
 FROM	debian
-RUN		apt-get upgrade && apt-get update
+RUN		apt-get update && apt-get upgrade
 RUN		apt-get install vsftpd -y
 COPY	./vsftpd.conf /etc/vsftpd.conf
-CMD		["vsftpd", "/etc/vsftpd.conf"]
+RUN		mkdir -p /var/run/vsftpd/empty
+CMD		["vsftpd"]
