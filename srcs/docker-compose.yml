@@ -1,4 +1,5 @@
 services:
+
   mariadb:
     build: ./requirements/mariadb
     image: mariadb
@@ -7,10 +8,10 @@ services:
       - db:/var/lib/mysql
     networks:
       - inception
-    env_file: ".env"
     secrets:
-      - db_pwd
+      - pwd
     restart: always
+
   nginx:
     build: ./requirements/nginx
     image: nginx
@@ -20,7 +21,6 @@ services:
       - adminer:/var/www/adminer
     networks:
       - inception
-    env_file: ".env"
     ports:
       - "443:443"
       - "80:80"
@@ -28,6 +28,11 @@ services:
       - wordpress
       - adminer
     restart: always
+    secrets:
+      - pwd
+    env_file:
+      - ".env"
+
   wordpress:
     build: ./requirements/wordpress
     image: wordpress
@@ -36,12 +41,14 @@ services:
       - wp:/var/www/wordpress
     networks:
       - inception
-    env_file: ".env"
-    secrets:
-      - db_pwd
     depends_on:
       - mariadb
     restart: always
+    secrets:
+      - pwd
+    env_file:
+      - ".env"
+
   adminer:
     build: ./requirements/adminer
     image: adminer
@@ -50,8 +57,8 @@ services:
       - adminer:/var/www/adminer
     networks:
       - inception
-    env_file: ".env"
     restart: always
+
   ftp:
     build: ./requirements/ftp
     image: ftp
@@ -60,11 +67,11 @@ services:
       - wp:/srv/ftp
     networks:
       - inception
-    env_file: ".env"
     ports:
       - "20:20"
       - "21:21"
     restart: always
+
   redis:
     build: ./requirements/redis
     image: redis
@@ -73,13 +80,25 @@ services:
       - inception
     restart: always
 
+  zabbix:
+    build: ./requirements/zabbix
+    image: zabbix
+    container_name: zabbix
+    networks:
+      - inception
+    restart: always
+    secrets:
+      - pwd
+    ports:
+      - "8080:8080"
+
 networks:
   inception:
     name: inception
 
 secrets:
-  db_pwd:
-    file: ../secrets/db_pwd.txt
+  pwd:
+    file: ../secrets/pwd.txt
 
 volumes:
   db:
@@ -103,3 +122,4 @@ volumes:
       device: /home/jeada-si/data/adminer
       o : bind
       type : none
+

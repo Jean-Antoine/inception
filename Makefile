@@ -15,3 +15,6 @@ down:
 
 stop:
 			docker compose -f ./srcs/docker-compose.yml stop
+
+rm-volumes:
+			sudo rm -drf /home/jeada-si/data/**/**

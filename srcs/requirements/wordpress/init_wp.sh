@@ -1,15 +1,16 @@
 #!/bin/bash
-DB_PWD=$(cat $DB_PWD_FILE)
+source /run/secrets/pwd
 until mysql --host=mariadb \
-				--user=${DB_USER} \
-				--password=${DB_PWD} \
+				--user=${DB_WP_USER} \
+				--password=${DB_WP_PWD} \
 				-e "USE wp;" ;
 do
 	echo "Waiting for MariaDB"
+	echo $DB_WP_USER
+	echo $DB_WP_PWD
 done
 
 #cf https://make.wordpress.org/cli/handbook/how-to/how-to-install/
-
 curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
@@ -17,12 +18,12 @@ mv wp-cli.phar /usr/local/bin/wp
 chmod -R 755 /var/www/wordpress/
 cd /var/www/wordpress
 wp core download --allow-root
-wp config create	--dbname=${DB_NAME} \
-					--dbuser=${DB_USER} \
-					--dbpass=${DB_PWD} \
+wp config create	--dbname=${DB_WP_NAME} \
+					--dbuser=${DB_WP_USER} \
+					--dbpass=${DB_WP_PWD} \
 					--dbhost=mariadb:3306 \
 					--allow-root
-wp core install	--url=${DOMAIN_NAME} \
+wp core install	--url=${WP_DOMAIN_NAME} \
 				--title="INCEPTION" \
 				--admin_user=${WP_ADMIN_NAME} \
 				--admin_password=${WP_ADMIN_PWD} \
