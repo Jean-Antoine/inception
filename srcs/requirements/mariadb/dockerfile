@@ -1,5 +1,5 @@
 FROM			debian:bullseye
-RUN				apt-get update
+RUN				apt-get update -y
 RUN				apt-get upgrade -y
 RUN				apt-get install -y mariadb-server
 COPY			./init_mariadb.sh /home/init_mariadb.sh

@@ -1,0 +1,7 @@
+FROM	debian:bullseye
+RUN		apt-get update -y
+RUN		apt-get upgrade -y
+RUN 	apt-get -y install golang-go
+RUN 	apt-get install -y git
+RUN 	go get github.com/mailhog/MailHog
+CMD		[ "/root/go/bin/MailHog" ]

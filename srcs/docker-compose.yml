@@ -80,17 +80,25 @@ services:
       - inception
     restart: always
 
-  zabbix:
-    build: ./requirements/zabbix
-    image: zabbix
-    container_name: zabbix
+  # zabbix:
+  #   build: ./requirements/zabbix
+  #   image: zabbix
+  #   container_name: zabbix
+  #   networks:
+  #     - inception
+  #   restart: always
+  #   secrets:
+  #     - pwd
+
+  mailhog:
+    build: ./requirements/mailhog
+    image: mailhog
+    container_name: mailhog
     networks:
       - inception
     restart: always
-    secrets:
-      - pwd
     ports:
-      - "8080:8080"
+      - "8025:8025"
 
 networks:
   inception:
@@ -122,4 +130,3 @@ volumes:
       device: /home/jeada-si/data/adminer
       o : bind
       type : none
-
