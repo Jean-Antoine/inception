@@ -1,0 +1,30 @@
+title: Inception 42
+description: Static site resume
+baseurl: ""
+url: ""
+
+theme: cvless
+
+# site settings
+taglong: Jean-Antoine DA SILVA
+tagshort: Jean-Antoine
+
+# author settings
+author:
+  name: Jean-Antoine DA SILVA
+  email: jean.antoine.dasilva@gmail.com
+photo: assets/files/photo.jpg
+address: 70 rue de Clignancourt, 75018 Paris
+phone: +33 6 50 87 55 06
+
+# social media links
+social:
+  github: Jean-Antoine
+  linkedin: jean-antoine-da-silva-462b83a1
+
+# build settings
+permalink: pretty
+exclude:
+  - docker-compose.yml
+  - LICENSE
+  - README.md

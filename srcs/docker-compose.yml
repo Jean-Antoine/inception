@@ -80,6 +80,14 @@ services:
       - inception
     restart: always
 
+  resume:
+    build: ./requirements/resume
+    image: resume
+    container_name: resume
+    networks:
+      - inception
+    restart: always
+
   # zabbix:
   #   build: ./requirements/zabbix
   #   image: zabbix

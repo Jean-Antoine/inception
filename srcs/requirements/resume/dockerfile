@@ -1,3 +1,14 @@
-FROM	debian:bullseye
-RUN		apt-get update -y
-RUN		apt-get upgrade -y
+FROM			debian:bullseye
+RUN				apt-get update -y
+RUN				apt-get upgrade -y
+RUN				apt-get install -y ruby-full build-essential zlib1g-dev
+RUN 			apt-get install -y make gcc
+RUN				gem install jekyll bundler
+RUN				gem install cvless
+RUN				echo test
+COPY			./site /site
+WORKDIR 		/site
+RUN				bundler install
+RUN 			bundler exec jekyll build
+RUN 			chmod 777 run.sh
+ENTRYPOINT		[ "./run.sh" ]
