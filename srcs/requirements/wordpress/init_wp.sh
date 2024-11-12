@@ -1,5 +1,4 @@
 #!/bin/bash
-source /run/secrets/pwd
 until mysql --host=mariadb \
 				--user=${DB_WP_USER} \
 				--password=${DB_WP_PWD} \
@@ -16,7 +15,6 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 chmod -R 755 /var/www/wordpress/
-chown -R www-data:www-data /var/www/wordpress/
 cd /var/www/wordpress
 wp core download --allow-root
 wp config create	--dbname=${DB_WP_NAME} \
@@ -44,6 +42,7 @@ wp plugin install smtp-mailer --allow-root
 wp plugin activate smtp-mailer --allow-root
 wp plugin install contact-form-7 --allow-root
 wp plugin activate contact-form-7 --allow-root
+chown -R www-data:www-data /var/www/wordpress/
 
 mkdir -p /run/php
 /usr/sbin/php-fpm7.4 -F

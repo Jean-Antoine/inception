@@ -1,5 +1,4 @@
 #!/bin/bash
-source /run/secrets/pwd
 service mariadb start
 service mariadb status
 mariadb -e "CREATE DATABASE IF NOT EXISTS \`${DB_WP_NAME}\`;"

@@ -8,8 +8,8 @@ services:
       - db:/var/lib/mysql
     networks:
       - inception
-    secrets:
-      - pwd
+    env_file:
+      - ".env"
     restart: always
 
   nginx:
@@ -23,13 +23,10 @@ services:
       - inception
     ports:
       - "443:443"
-      - "80:80"
     depends_on:
       - wordpress
       - adminer
     restart: always
-    secrets:
-      - pwd
     env_file:
       - ".env"
 
@@ -44,8 +41,6 @@ services:
     depends_on:
       - mariadb
     restart: always
-    secrets:
-      - pwd
     env_file:
       - ".env"
 
@@ -87,16 +82,6 @@ services:
     networks:
       - inception
     restart: always
-
-  # zabbix:
-  #   build: ./requirements/zabbix
-  #   image: zabbix
-  #   container_name: zabbix
-  #   networks:
-  #     - inception
-  #   restart: always
-  #   secrets:
-  #     - pwd
 
   mailhog:
     build: ./requirements/mailhog

@@ -11,5 +11,9 @@ RUN		openssl req -x509 -nodes \
 	-out /home/adminer.crt \
 	-keyout /home/adminer.key \
 	-subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=adminer.42.fr/UID=admin_name"
+RUN		openssl req -x509 -nodes \
+	-out /home/resume.crt \
+	-keyout /home/resume.key \
+	-subj "/C=FR/ST=Paris/L=Paris/O=42/OU=42/CN=resume.42.fr/UID=admin_name"
 COPY	./nginx.conf /etc/nginx/nginx.conf
 CMD		["nginx", "-g", "daemon off;"]
